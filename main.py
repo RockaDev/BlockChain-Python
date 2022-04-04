@@ -1,5 +1,6 @@
 from hashlib import sha256
 import json
+import random,sys
 
 class BlockChain(object):
     def __init__(self):
@@ -19,12 +20,16 @@ class BlockChain(object):
 
 
 blockchain=BlockChain()
-t1 = blockchain.transaction("Alice","9","Michal")
-t2 = blockchain.transaction("Bob","91","Liza")
-t3 = blockchain.transaction("Blano","8.1","Fero")
+t1 = blockchain.transaction("Alice",f"{random.randint(1,100)}","Michal")
+t2 = blockchain.transaction("Bob",f"{random.randint(1,100)}","Liza")
+t3 = blockchain.transaction("Blano",f"{random.randint(1,100)}","Fero")
 name = str(input("Name: "))
 pay = str(input("Amount of BTC: "))
-receiver = str(input("Who to send: "))
+if pay.isdigit():
+    receiver = str(input("Who to send: "))
+else:
+    print("Amount must contain only numbers!")
+    sys.exit()
 t4 = blockchain.transaction(name,pay,receiver)
 
 #SAVE FILE
@@ -37,4 +42,3 @@ with open(file="clients.txt",mode="a") as clients:
 #PRINT TRANSACTIONS
 for transaction in blockchain.transactions:
     print(transaction)
-
